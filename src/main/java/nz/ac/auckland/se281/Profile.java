@@ -17,6 +17,4 @@ public class Profile {
         // add to profiles count
         nProfiles++;
     }
-
-
 }
