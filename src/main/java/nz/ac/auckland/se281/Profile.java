@@ -22,6 +22,10 @@ public class Profile {
         return this.name;
     }
 
+    public int getAge() {
+        return this.age;
+    }
+
     public static int getProfileCount() {
         // returns number of profiles
         return nProfiles;
