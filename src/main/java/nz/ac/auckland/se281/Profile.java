@@ -17,4 +17,8 @@ public class Profile {
         // add to profiles count
         nProfiles++;
     }
+
+    public int getProfileCount() {
+        // returns number of profiles
+    }
 }
