@@ -21,6 +21,7 @@ public class InsuranceSystem {
 
   public void createNewProfile(String userName, String age) {
     // TODO: Complete this method.
+    userName = toTitle(userName);
     if (isInDatabase(userName)) {
       // profile with username already exists within database
       MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
@@ -29,6 +30,7 @@ public class InsuranceSystem {
       // unique profile -> create new profile and add to database
       Profile profile = new Profile(userName, Integer.parseInt(age));
       database.add(profile);
+      MessageCli.PROFILE_CREATED.printMessage(userName, age);
     }
   }
 
