@@ -9,10 +9,10 @@ public class Profile {
     // static fields
     private static int nProfiles = 0;
 
-    public Profile(String name, int age) {
+    public Profile(String name, String age) {
         // constructor
         this.name = name;
-        this.age = age;
+        this.age = Integer.parseInt(age);
 
         // add to profiles count
         nProfiles++;
@@ -20,5 +20,6 @@ public class Profile {
 
     public int getProfileCount() {
         // returns number of profiles
+        return nProfiles;
     }
 }

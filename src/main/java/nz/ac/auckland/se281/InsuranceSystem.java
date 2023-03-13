@@ -1,10 +1,16 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
+
+    // init arraylist for profile database
+    ArrayList<Profile> profiles = new ArrayList<>();
+
   }
 
   public void printDatabase() {
@@ -15,7 +21,7 @@ public class InsuranceSystem {
 
   public void createNewProfile(String userName, String age) {
     // TODO: Complete this method.
-    
+
   }
 
   public void loadProfile(String userName) {
