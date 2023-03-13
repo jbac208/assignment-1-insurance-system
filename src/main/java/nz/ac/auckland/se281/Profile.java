@@ -14,13 +14,11 @@ public class Profile {
         this.name = name;
         this.age = age;
 
-        System.out.println(nProfiles);
         // add to profiles count
         nProfiles++;
-        System.out.println(nProfiles);
     }
 
-    public int getProfileCount() {
+    public static int getProfileCount() {
         // returns number of profiles
         return nProfiles;
     }

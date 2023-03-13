@@ -7,7 +7,7 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
   
   // init arraylist of profiles for database
-  private ArrayList<Profile> profiles = new ArrayList<>();
+  private ArrayList<Profile> database = new ArrayList<>();
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -16,13 +16,13 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     // TODO: Complete this method.
-    //MessageCli.PRINT_DB_POLICY_COUNT.printMessage("3", "s", ".");
+    MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(Profile.getProfileCount()), "s", ".");
   }
 
   public void createNewProfile(String userName, String age) {
     // TODO: Complete this method.
     Profile profile = new Profile(userName, Integer.parseInt(age));
-    profiles.add(profile);
+    database.add(profile);
   }
 
   public void loadProfile(String userName) {
