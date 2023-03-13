@@ -48,6 +48,14 @@ public class InsuranceSystem {
     // TODO: Complete this method.
   }
 
+  public String toTitle(String word) {
+    // titles given string -> makes first char upper and rest lowercase
+    String upWord = word.toUpperCase();
+    String lowWord = word.toLowerCase();
+    String titledWord = upWord.substring(0,1) + lowWord.substring(1);
+    return titledWord;
+  }
+
   public boolean isInDatabase(String userName) {
     // checks if given username string exists within database
     for (Profile profile : database) {
