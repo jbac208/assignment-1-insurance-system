@@ -18,6 +18,10 @@ public class Profile {
         nProfiles++;
     }
 
+    public String getUserName() {
+        return this.name;
+    }
+
     public static int getProfileCount() {
         // returns number of profiles
         return nProfiles;
