@@ -19,10 +19,12 @@ public class Profile {
     }
 
     public String getUserName() {
+        // returns userName
         return this.name;
     }
 
     public int getAge() {
+        // returns integer age
         return this.age;
     }
 

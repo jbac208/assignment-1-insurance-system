@@ -40,4 +40,14 @@ public class InsuranceSystem {
   public void createPolicy(PolicyType type, String[] options) {
     // TODO: Complete this method.
   }
+
+  public boolean isInDatabase(String userName) {
+    // checks if given username string exists within database
+    for (Profile profile : database) {
+      if (userName.equals(profile.getUserName())) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
