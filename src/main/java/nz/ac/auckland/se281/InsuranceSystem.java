@@ -16,20 +16,20 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     // TODO: Complete this method.
-    MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(Profile.getProfileCount()), "s", ".");
+    if (Profile.getProfileCount() == 0) {   // Database has 0 profiles.
+      MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(Profile.getProfileCount()), "s", ".");
+    }
+
+    // DO each ones punctuation
   }
 
   public void createNewProfile(String userName, String age) {
     // TODO: Complete this method.
-    userName = toTitle(userName);
-    if (userName.length() < 3) {
-      MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
-    } else if (isInDatabase(userName)) {
-      // profile with username already exists within database
-      MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
-    } else {
-      // unique profile -> create new profile and add to database
-      Profile profile = new Profile(userName, Integer.parseInt(age));
+    userName = toTitle(userName);   // titlefy userName
+    int nAge = Integer.parseInt(age);   // save age as type int
+    if (isProfileArgsValid(userName, age)) {
+      // create new profile and add to database
+      Profile profile = new Profile(userName, nAge);
       database.add(profile);
       MessageCli.PROFILE_CREATED.printMessage(userName, age);
     }
@@ -49,6 +49,22 @@ public class InsuranceSystem {
 
   public void createPolicy(PolicyType type, String[] options) {
     // TODO: Complete this method.
+  }
+
+  public boolean isProfileArgsValid(String userName, String age) {
+    int nAge = Integer.parseInt(age);   // save age as type int
+    if (userName.length() < 3) {    // checking name atleast 3 chars
+      MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
+    } else if (nAge < 0) {   // make sure age is positive **whole number not sure if need whole number yet
+      MessageCli.INVALID_AGE.printMessage(age, userName);
+    } else if (isInDatabase(userName)) {    // check if name already in database
+      // profile with username already exists within database
+      MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
+    } else {
+      // valid args so return true
+      return true;
+    }
+    return false;
   }
 
   public String toTitle(String word) {
