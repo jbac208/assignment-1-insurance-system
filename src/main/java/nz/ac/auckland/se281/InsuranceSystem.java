@@ -1,13 +1,11 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
-
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
 
-  // init arraylist of profiles for database
-  private ArrayList<Profile> database = new ArrayList<>();
+  private ArrayList<Profile> database = new ArrayList<>(); // arraylist of profiles for database
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -15,21 +13,22 @@ public class InsuranceSystem {
   }
 
   public void printDatabase() {
-    int nProfileCount = database.size(); // get profile count
-    switch (nProfileCount) {
+    // Pretty prints database
+    int ProfileCount = database.size(); // get profile count
+    switch (ProfileCount) {
       case 0:
-        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ".");
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(ProfileCount), "s", ".");
         break;
 
       case 1:
-        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "", ":");
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(ProfileCount), "", ":");
         MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", database.get(0).getUserName(),
             Integer.toString(database.get(0).getAge()));
         break;
 
       default:
-        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ":");
-        for (int i = 0; i < nProfileCount; i++) {
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(ProfileCount), "s", ":");
+        for (int i = 0; i < ProfileCount; i++) {
           Profile profile = database.get(i);
           MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(Integer.toString(i + 1),
               profile.getUserName(), Integer.toString(profile.getAge()));
@@ -38,11 +37,12 @@ public class InsuranceSystem {
   }
 
   public void createNewProfile(String userName, String age) {
+    // creating new instance of profile and add to database
     userName = toTitle(userName); // titlefy userName
-    int nAge = Integer.parseInt(age); // save age as type int
+    int ageInt = Integer.parseInt(age); // save age as type int
     if (isProfileArgsValid(userName, age)) {
       // create new profile and add to database
-      Profile profile = new Profile(userName, nAge);
+      Profile profile = new Profile(userName, ageInt);
       database.add(profile);
       MessageCli.PROFILE_CREATED.printMessage(userName, age);
     }
@@ -67,10 +67,10 @@ public class InsuranceSystem {
   public boolean isProfileArgsValid(String userName, String age) {
     // Checks if given arguments for creating profile is valid and prints according
     // error messages
-    int nAge = Integer.parseInt(age); // save age as type int
+    int ageInt = Integer.parseInt(age); // save age as type int
     if (userName.length() < 3) { // checking name atleast 3 chars
       MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
-    } else if (nAge < 0) { // make sure age is positive **whole number not sure if need whole number yet
+    } else if (ageInt < 0) { // make sure age is positive **whole number not sure if need whole number yet
       MessageCli.INVALID_AGE.printMessage(age, userName);
     } else if (isInDatabase(userName)) { // check if name already in database
       // profile with username already exists within database
@@ -83,7 +83,7 @@ public class InsuranceSystem {
   }
 
   public String toTitle(String word) {
-    // titles given string -> makes first char upper and rest lowercase
+    // titles given string meaning, makes first char upper and rest lowercase
     String upWord = word.toUpperCase();
     String lowWord = word.toLowerCase();
     String titledWord = upWord.substring(0, 1) + lowWord.substring(1);

@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281;
 
 public class Profile {
-    
+
     // instance fields
     private String name;
     private int age;
@@ -13,12 +13,12 @@ public class Profile {
     }
 
     public String getUserName() {
-        // returns userName
+        // get name
         return this.name;
     }
 
     public int getAge() {
-        // returns integer age
+        // get age
         return this.age;
     }
 }
