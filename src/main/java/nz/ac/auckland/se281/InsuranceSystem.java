@@ -39,9 +39,9 @@ public class InsuranceSystem {
   public void createNewProfile(String userName, String age) {
     // creating new instance of profile and add to database
     userName = toTitle(userName); // titlefy userName
-    int ageInt = Integer.parseInt(age); // save age as type int
     if (isProfileArgsValid(userName, age)) {
       // create new profile and add to database
+      int ageInt = Integer.parseInt(age); // save age as type int
       Profile profile = new Profile(userName, ageInt);
       database.add(profile);
       MessageCli.PROFILE_CREATED.printMessage(userName, age);
@@ -67,17 +67,21 @@ public class InsuranceSystem {
   public boolean isProfileArgsValid(String userName, String age) {
     // Checks if given arguments for creating profile is valid and prints according
     // error messages
-    int ageInt = Integer.parseInt(age); // save age as type int
-    if (userName.length() < 3) { // checking name atleast 3 chars
-      MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
-    } else if (ageInt < 0) { // make sure age is positive **whole number not sure if need whole number yet
+    try {
+      int ageInt = Integer.parseInt(age); // save age as type int
+      if (userName.length() < 3) { // checking name atleast 3 chars
+        MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
+      } else if (ageInt < 0) { // make sure age is positive
+        MessageCli.INVALID_AGE.printMessage(age, userName);
+      } else if (isInDatabase(userName)) { // check if name already in database
+        // profile with username already exists within database
+        MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
+      } else {
+        // valid args so return true
+        return true;
+      }
+    } catch (NumberFormatException exception) {
       MessageCli.INVALID_AGE.printMessage(age, userName);
-    } else if (isInDatabase(userName)) { // check if name already in database
-      // profile with username already exists within database
-      MessageCli.INVALID_USERNAME_NOT_UNIQUE.printMessage(userName);
-    } else {
-      // valid args so return true
-      return true;
     }
     return false;
   }
