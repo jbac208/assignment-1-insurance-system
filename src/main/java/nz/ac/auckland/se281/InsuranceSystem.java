@@ -18,19 +18,25 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     // TODO: Complete this method.
-    int nProfileCount = database.size();
+    int nProfileCount = database.size();  // get profile count
     switch (nProfileCount) {
       case 0:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ".");
-
         break;
 
       case 1:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "", ":");
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", database.get(0).getUserName(), 
+          Integer.toString(database.get(0).getAge()));
         break;
       
       default:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ":");
+        for (int i = 0; i < nProfileCount; i++) {
+          Profile profile = database.get(i);
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(Integer.toString(i+1), 
+            profile.getUserName(), Integer.toString(profile.getAge()));
+        }
     }
   }
 
