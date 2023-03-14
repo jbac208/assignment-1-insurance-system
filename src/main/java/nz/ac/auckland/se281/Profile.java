@@ -6,16 +6,10 @@ public class Profile {
     private String name;
     private int age;
 
-    // static fields
-    private static int nProfiles = 0;
-
     public Profile(String name, int age) {
         // constructor
         this.name = name;
         this.age = age;
-
-        // add to profiles count
-        nProfiles++;
     }
 
     public String getUserName() {
@@ -26,10 +20,5 @@ public class Profile {
     public int getAge() {
         // returns integer age
         return this.age;
-    }
-
-    public static int getProfileCount() {
-        // returns number of profiles
-        return nProfiles;
     }
 }

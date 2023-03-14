@@ -18,10 +18,11 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     // TODO: Complete this method.
-    int nProfileCount = Profile.getProfileCount();
+    int nProfileCount = database.size();
     switch (nProfileCount) {
       case 0:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ".");
+
         break;
 
       case 1:
