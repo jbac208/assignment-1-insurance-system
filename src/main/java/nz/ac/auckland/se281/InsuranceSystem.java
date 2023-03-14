@@ -17,7 +17,6 @@ public class InsuranceSystem {
   }
 
   public void printDatabase() {
-    // TODO: Complete this method.
     int nProfileCount = database.size();  // get profile count
     switch (nProfileCount) {
       case 0:
@@ -41,7 +40,6 @@ public class InsuranceSystem {
   }
 
   public void createNewProfile(String userName, String age) {
-    // TODO: Complete this method.
     userName = toTitle(userName);   // titlefy userName
     int nAge = Integer.parseInt(age);   // save age as type int
     if (isProfileArgsValid(userName, age)) {
