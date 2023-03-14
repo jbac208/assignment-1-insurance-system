@@ -2,6 +2,8 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 
+import javax.swing.text.AbstractDocument.BranchElement;
+
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
@@ -16,11 +18,19 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     // TODO: Complete this method.
-    if (Profile.getProfileCount() == 0) {   // Database has 0 profiles.
-      MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(Profile.getProfileCount()), "s", ".");
-    }
+    int nProfileCount = Profile.getProfileCount();
+    switch (nProfileCount) {
+      case 0:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ".");
+        break;
 
-    // DO each ones punctuation
+      case 1:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "", ":");
+        break;
+      
+      default:
+        MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(nProfileCount), "s", ":");
+    }
   }
 
   public void createNewProfile(String userName, String age) {
@@ -52,6 +62,7 @@ public class InsuranceSystem {
   }
 
   public boolean isProfileArgsValid(String userName, String age) {
+    // Checks if given arguments for creating profile is valid and prints according error messages
     int nAge = Integer.parseInt(age);   // save age as type int
     if (userName.length() < 3) {    // checking name atleast 3 chars
       MessageCli.INVALID_USERNAME_TOO_SHORT.printMessage(userName);
