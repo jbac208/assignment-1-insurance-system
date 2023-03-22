@@ -22,16 +22,16 @@ public class InsuranceSystem {
 
       case 1:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "", ":");
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage("1", database.get(0).getUserName(),
-            Integer.toString(database.get(0).getAge()));
+        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+            "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
         break;
 
       default:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "s", ":");
         for (int i = 0; i < profileCount; i++) {
           Profile profile = database.get(i);
-          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(Integer.toString(i + 1),
-              profile.getUserName(), Integer.toString(profile.getAge()));
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+              Integer.toString(i + 1), profile.getUserName(), Integer.toString(profile.getAge()));
         }
     }
   }
