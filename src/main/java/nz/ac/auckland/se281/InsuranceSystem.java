@@ -103,6 +103,7 @@ public class InsuranceSystem {
     userName = toTitle(userName);
     if (isInDatabase(userName)) {
       Profile profileToDelete = database.get(dbIndexOfUser(userName));
+      // check if not null first otherwise when checking equality -> causes error
       if (loadedProfile != null && loadedProfile.equals(profileToDelete)) {
         // cannot delete currently loaded profile
         MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(userName);
