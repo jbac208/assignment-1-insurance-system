@@ -99,9 +99,7 @@ public class InsuranceSystem {
     }
   }
 
-  public void deleteProfile(String userName) {
-    // TODO: Complete this method.
-  }
+  public void deleteProfile(String userName) {}
 
   public void createPolicy(PolicyType type, String[] options) {
     // TODO: Complete this method.
@@ -145,5 +143,18 @@ public class InsuranceSystem {
       }
     }
     return false;
+  }
+
+  public int dbIndexOfUser(String userName) {
+    int i = 0; // iterator variable
+    for (Profile profile : database) {
+      if (userName.equals(profile.getUserName())) {
+        // return index of profile
+        return i;
+      }
+      i++;
+    }
+    // userName not in database
+    return -1;
   }
 }
