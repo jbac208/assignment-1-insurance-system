@@ -99,7 +99,23 @@ public class InsuranceSystem {
     }
   }
 
-  public void deleteProfile(String userName) {}
+  public void deleteProfile(String userName) {
+    userName = toTitle(userName);
+    if (isInDatabase(userName)) {
+      Profile profileToDelete = database.get(dbIndexOfUser(userName));
+      if (loadedProfile != null && loadedProfile.equals(profileToDelete)) {
+        // cannot delete currently loaded profile
+        MessageCli.CANNOT_DELETE_PROFILE_WHILE_LOADED.printMessage(userName);
+      } else {
+        // delete profile if not equal to currently loaded profile
+        MessageCli.PROFILE_DELETED.printMessage(userName);
+        database.remove(profileToDelete);
+      }
+    } else {
+      // not in database
+      MessageCli.NO_PROFILE_FOUND_TO_DELETE.printMessage(userName);
+    }
+  }
 
   public void createPolicy(PolicyType type, String[] options) {
     // TODO: Complete this method.
