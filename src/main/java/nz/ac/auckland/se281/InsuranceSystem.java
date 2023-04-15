@@ -6,6 +6,7 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private ArrayList<Profile> database = new ArrayList<>(); // arraylist of profiles for database
+  private Profile loadedProfile; // profile currently loaded
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -22,34 +23,67 @@ public class InsuranceSystem {
 
       case 1:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "", ":");
-        MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-            "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
+        if (database.get(0).equals(loadedProfile)) {
+          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+              "*** ",
+              "1",
+              database.get(0).getUserName(),
+              Integer.toString(database.get(0).getAge()));
+        } else {
+          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+              "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
+        }
         break;
 
       default:
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "s", ":");
         for (int i = 0; i < profileCount; i++) {
           Profile profile = database.get(i);
-          MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-              Integer.toString(i + 1), profile.getUserName(), Integer.toString(profile.getAge()));
+          if (profile.equals(loadedProfile)) {
+            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+                "*** ",
+                Integer.toString(i + 1),
+                profile.getUserName(),
+                Integer.toString(profile.getAge()));
+          } else {
+            MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
+                Integer.toString(i + 1), profile.getUserName(), Integer.toString(profile.getAge()));
+          }
         }
     }
   }
 
   public void createNewProfile(String userName, String age) {
-    // creating new instance of profile and add to database
-    userName = toTitle(userName); // titlefy userName
-    if (isProfileArgsValid(userName, age)) {
-      // create new profile and add to database
-      int ageInt = Integer.parseInt(age); // save age as type int
-      Profile profile = new Profile(userName, ageInt);
-      database.add(profile);
-      MessageCli.PROFILE_CREATED.printMessage(userName, age);
+    if (loadedProfile == null) {
+      // creating new instance of profile and add to database
+      userName = toTitle(userName); // titlefy userName
+      if (isProfileArgsValid(userName, age)) {
+        // create new profile and add to database
+        int ageInt = Integer.parseInt(age); // save age as type int
+        Profile profile = new Profile(userName, ageInt);
+        database.add(profile);
+        MessageCli.PROFILE_CREATED.printMessage(userName, age);
+      }
+    } else {
+      MessageCli.CANNOT_CREATE_WHILE_LOADED.printMessage(loadedProfile.getUserName());
     }
   }
 
   public void loadProfile(String userName) {
-    // TODO: Complete this method.
+    userName = toTitle(userName);
+    if (isInDatabase(userName)) {
+      // load profile from database
+      for (Profile profile : database) {
+        if (userName.equals(profile.getUserName())) {
+          loadedProfile = profile;
+          MessageCli.PROFILE_LOADED.printMessage(userName);
+          return;
+        }
+      }
+    } else {
+      // profile not in database
+      MessageCli.NO_PROFILE_FOUND_TO_LOAD.printMessage(userName);
+    }
   }
 
   public void unloadProfile() {
@@ -102,5 +136,5 @@ public class InsuranceSystem {
       }
     }
     return false;
-  }  
+  }
 }
