@@ -89,7 +89,14 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
-    // TODO: Complete this method.
+    if (loadedProfile != null) {
+      // unload profile
+      MessageCli.PROFILE_UNLOADED.printMessage(loadedProfile.getUserName());
+      loadedProfile = null;
+    } else {
+      // no current loaded profile
+      MessageCli.NO_PROFILE_LOADED.printMessage();
+    }
   }
 
   public void deleteProfile(String userName) {
