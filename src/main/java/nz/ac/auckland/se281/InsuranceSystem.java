@@ -54,6 +54,7 @@ public class InsuranceSystem {
   }
 
   public void createNewProfile(String userName, String age) {
+    // only create profile if there is no current loadedProfile
     if (loadedProfile == null) {
       // creating new instance of profile and add to database
       userName = toTitle(userName); // titlefy userName
@@ -70,6 +71,7 @@ public class InsuranceSystem {
   }
 
   public void loadProfile(String userName) {
+    // if profile exists, then load
     userName = toTitle(userName);
     if (isInDatabase(userName)) {
       // load profile from database
