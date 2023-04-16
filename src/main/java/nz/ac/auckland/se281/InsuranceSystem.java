@@ -153,23 +153,34 @@ public class InsuranceSystem {
       // create according policy and add to profile
       switch (type) {
         case HOME:
+          // add new home policy
           Boolean rent = stringToBool(options[2]);
-          HomePolicy policy = new HomePolicy(sumInsured, options[1], rent);
-          loadedProfile.addPolicy(policy);
+          HomePolicy homePolicy = new HomePolicy(sumInsured, options[1], rent);
+          loadedProfile.addPolicy(homePolicy);
           MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
           break;
 
         case CAR:
+          // add new car policy
+          Boolean breakdownCoverage = stringToBool(options[3]);
+          CarPolicy carPolicy =
+              new CarPolicy(
+                  sumInsured, options[1], options[2], breakdownCoverage, loadedProfile.getAge());
+          loadedProfile.addPolicy(carPolicy);
           MessageCli.NEW_POLICY_CREATED.printMessage("car", userName);
           break;
 
         case LIFE:
           if (hasLifePolicy(loadedProfile)) {
+            // user already has a life policy
             MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(loadedProfile.getUserName());
           } else if (loadedProfile.getAge() > 100) {
+            // user is over max age 100 years
             MessageCli.OVER_AGE_LIMIT_LIFE_POLICY.printMessage(loadedProfile.getUserName());
           } else {
             // add a new life policy to loadedProfile
+            LifePolicy lifePolicy = new LifePolicy(sumInsured, loadedProfile.getAge());
+            loadedProfile.addPolicy(lifePolicy);
             MessageCli.NEW_POLICY_CREATED.printMessage("life", userName);
           }
           break;
