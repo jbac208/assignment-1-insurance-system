@@ -155,8 +155,8 @@ public class InsuranceSystem {
         case HOME:
           Boolean rent = stringToBool(options[2]);
           HomePolicy policy = new HomePolicy(sumInsured, options[1], rent);
-          MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
           loadedProfile.addPolicy(policy);
+          MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
           break;
 
         case CAR:
@@ -164,7 +164,14 @@ public class InsuranceSystem {
           break;
 
         case LIFE:
-          MessageCli.NEW_POLICY_CREATED.printMessage("life", userName);
+          if (hasLifePolicy(loadedProfile)) {
+            MessageCli.ALREADY_HAS_LIFE_POLICY.printMessage(loadedProfile.getUserName());
+          } else if (loadedProfile.getAge() > 100) {
+            MessageCli.OVER_AGE_LIMIT_LIFE_POLICY.printMessage(loadedProfile.getUserName());
+          } else {
+            // add a new life policy to loadedProfile
+            MessageCli.NEW_POLICY_CREATED.printMessage("life", userName);
+          }
           break;
       }
     }
@@ -172,10 +179,10 @@ public class InsuranceSystem {
 
   public Boolean hasLifePolicy(Profile profile) {
     for (Policy policy : profile.getPolicies()) {
-        if (policy.getClass() == LifePolicy.class) {
-            // user already has life policy
-            return true;
-        }
+      if (LifePolicy.class.isInstance(policy)) {
+        // user already has life policy
+        return true;
+      }
     }
     return false;
   }
