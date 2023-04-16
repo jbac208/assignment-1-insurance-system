@@ -26,6 +26,10 @@ public class Profile {
     return this.age;
   }
 
+  public void addPolicy(Policy policy) {
+    profilePolicies.add(policy);
+  }
+
   public ArrayList<Policy> getPolicies() {
     return profilePolicies;
   }

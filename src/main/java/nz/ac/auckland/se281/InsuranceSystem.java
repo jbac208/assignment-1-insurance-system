@@ -120,12 +120,23 @@ public class InsuranceSystem {
 
   public void createPolicy(PolicyType type, String[] options) {
     if (loadedProfile == null) {
+      // if no loaded, print error msg
       MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
     } else {
       String userName = loadedProfile.getUserName();
+      int sumInsured = Integer.parseInt(options[0]);
+      // create according policy and add to profile
       switch (type) {
         case HOME:
+          Boolean rent;
+          if (options[2].equals("yes")) {
+            rent = true;
+          } else {
+            rent = false;
+          }
+          HomePolicy policy = new HomePolicy(sumInsured, options[1], rent);
           MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
+          loadedProfile.addPolicy(policy);
           break;
 
         case CAR:

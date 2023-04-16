@@ -11,10 +11,6 @@ public class HomePolicy extends Policy {
     this.rental = rental;
   }
 
-  public String getAddress() {
-    return address;
-  }
-
   @Override
   public void calculatePremium() {
     if (rental) {

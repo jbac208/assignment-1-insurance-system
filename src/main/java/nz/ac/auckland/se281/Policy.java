@@ -24,5 +24,9 @@ public abstract class Policy {
     this.basePremium = basePremium;
   }
 
+  public void stringToBool(String val) {
+    //if (val )
+  }
+
   public abstract void calculatePremium();
 }
