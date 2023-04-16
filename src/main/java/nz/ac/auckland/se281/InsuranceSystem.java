@@ -122,7 +122,20 @@ public class InsuranceSystem {
     if (loadedProfile == null) {
       MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
     } else {
+      String userName = loadedProfile.getUserName();
+      switch (type) {
+        case HOME:
+          MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
+          break;
 
+        case CAR:
+          MessageCli.NEW_POLICY_CREATED.printMessage("car", userName);
+          break;
+
+        case LIFE:
+          MessageCli.NEW_POLICY_CREATED.printMessage("life", userName);
+          break;
+      }
     }
   }
 
