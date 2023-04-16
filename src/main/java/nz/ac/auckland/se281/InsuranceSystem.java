@@ -55,12 +55,20 @@ public class InsuranceSystem {
           loadedProfile.getUserName(),
           Integer.toString(loadedProfile.getAge()),
           Integer.toString(policies.size()),
-          "y",
+          policyPluralCheck(policies),
           "100");
     } else {
       MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
           "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
     }
+  }
+
+  public String policyPluralCheck(ArrayList<Policy> policies) {
+    int policyCount = policies.size();
+    if (policyCount == 1) {
+      return "y";
+    }
+    return "ies";
   }
 
   public void createNewProfile(String userName, String age) {
