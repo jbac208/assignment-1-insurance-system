@@ -1,0 +1,18 @@
+public class LifePolicy extends Policy {
+
+  private int profileAge;
+  private Boolean hasLifePolicy;
+
+  public LifePolicy(int sumInsured, int age) {
+    super(sumInsured);
+    this.profileAge = age;
+  }
+
+  @Override
+  public void calculateBasePremium() {
+    // calculates, and sets base premium
+    if (profile.getAge() < 100) {
+      // do something
+    }
+  }
+}

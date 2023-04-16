@@ -170,6 +170,16 @@ public class InsuranceSystem {
     }
   }
 
+  public Boolean hasLifePolicy(Profile profile) {
+    for (Policy policy : profile.getPolicies()) {
+        if (policy.getClass() == LifePolicy.class) {
+            // user already has life policy
+            return true;
+        }
+    }
+    return false;
+  }
+
   public Boolean stringToBool(String input) {
     // method converts input yes to bool true, else bool false
     if (input.equals("yes")) {
