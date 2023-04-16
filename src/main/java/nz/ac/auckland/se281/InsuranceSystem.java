@@ -60,6 +60,7 @@ public class InsuranceSystem {
   }
 
   public void printProfilePolicies(Profile profile) {
+    // prints profile policies
     for (Policy policy : profile.getPolicies()) {
       if (policy instanceof HomePolicy) {
         MessageCli.PRINT_DB_HOME_POLICY.printMessage(
