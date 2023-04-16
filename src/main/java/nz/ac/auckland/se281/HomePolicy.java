@@ -2,6 +2,7 @@ package nz.ac.auckland.se281;
 
 public class HomePolicy extends Policy {
 
+  // home policy fields
   private String address;
   private boolean rental;
 
@@ -9,7 +10,7 @@ public class HomePolicy extends Policy {
     super(sumInsured);
     this.address = address;
     this.rental = rental;
-    calculateDiscountedPremium();
+    calculateBasePremium();
   }
 
   public String getAddress() {
@@ -17,11 +18,12 @@ public class HomePolicy extends Policy {
   }
 
   @Override
-  public void calculateDiscountedPremium() {
+  public void calculateBasePremium() {
+    // calculates, and sets base premium
     if (rental) {
-      setDiscountedPremium(getBasePremium() * (1 - 0.02));
+      setBasePremium(getSumInsured() * (1 - 0.02));
     } else {
-      setDiscountedPremium(getBasePremium() * (1 - 0.01));
+      setBasePremium(getSumInsured() * (1 - 0.01));
     }
   }
 }

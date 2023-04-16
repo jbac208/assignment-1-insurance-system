@@ -1,0 +1,27 @@
+public class CarPolicy extends Policy {
+
+  private String makeAndModel;
+  private String licensePlate;
+  private Boolean breakdownCoverage;
+
+  public CarPolicy(int sumInsured, String makeAndModel, String licensePlate, Boolean breakdownCoverage) {
+    super(sumInsured);
+    this.makeAndModel = makeAndModel;
+    this.licensePlate = licensePlate;
+    this.breakdownCoverage = breakdownCoverage;
+  }
+
+  public String getMakeAndModel() {
+    return makeAndModel;
+  }
+
+  @Override
+  public void calculateDiscountedPremium() {
+    // calculates, and sets discounted premium
+    
+
+    if (breakdownCoverage) {
+      setDiscountedPremium(getBasePremium() + 80);
+    }
+  }
+}
