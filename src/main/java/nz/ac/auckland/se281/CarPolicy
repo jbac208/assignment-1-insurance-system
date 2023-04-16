@@ -3,12 +3,14 @@ public class CarPolicy extends Policy {
   private String makeAndModel;
   private String licensePlate;
   private Boolean breakdownCoverage;
+  private int profileAge;
 
-  public CarPolicy(int sumInsured, String makeAndModel, String licensePlate, Boolean breakdownCoverage) {
+  public CarPolicy(int sumInsured, String makeAndModel, String licensePlate, Boolean breakdownCoverage, int age) {
     super(sumInsured);
     this.makeAndModel = makeAndModel;
     this.licensePlate = licensePlate;
     this.breakdownCoverage = breakdownCoverage;
+    this.profileAge = age;
   }
 
   public String getMakeAndModel() {
@@ -16,9 +18,11 @@ public class CarPolicy extends Policy {
   }
 
   @Override
-  public void calculateDiscountedPremium() {
+  public void calculateBasePremium() {
     // calculates, and sets discounted premium
-    
+    if (profileAge < 25) {
+        setBasePremium(getSumInsured() * )
+    }
 
     if (breakdownCoverage) {
       setDiscountedPremium(getBasePremium() + 80);

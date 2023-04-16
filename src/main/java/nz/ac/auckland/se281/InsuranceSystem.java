@@ -65,7 +65,7 @@ public class InsuranceSystem {
           Integer.toString(database.get(0).getAge()),
           Integer.toString(policies.size()),
           policyPluralCheck(policies),
-          Integer.toString(database.get(0).calculatePoliciesSum())); // fix this
+          Integer.toString(database.get(0).calculatePoliciesSum()));
     }
   }
 

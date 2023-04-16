@@ -21,9 +21,9 @@ public class HomePolicy extends Policy {
   public void calculateBasePremium() {
     // calculates, and sets base premium
     if (rental) {
-      setBasePremium(getSumInsured() * (1 - 0.02));
+      setBasePremium(getSumInsured() * 0.02);
     } else {
-      setBasePremium(getSumInsured() * (1 - 0.01));
+      setBasePremium(getSumInsured() * 0.01);
     }
   }
 }
