@@ -18,6 +18,7 @@ public class CarPolicy extends Policy {
     this.licensePlate = licensePlate;
     this.breakdownCoverage = breakdownCoverage;
     this.profileAge = age;
+    calculateBasePremium();
   }
 
   public String getMakeAndModel() {

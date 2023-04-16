@@ -7,6 +7,7 @@ public class LifePolicy extends Policy {
   public LifePolicy(int sumInsured, int age) {
     super(sumInsured);
     userAge = age;
+    calculateBasePremium();
   }
 
   @Override
