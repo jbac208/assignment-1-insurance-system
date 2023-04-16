@@ -18,28 +18,40 @@ public class InsuranceSystem {
     int profileCount = database.size(); // get profile count
     switch (profileCount) {
       case 0:
+        // num of profiles header
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "s", ".");
         break;
 
       case 1:
-        // do prints
+        // when 1 profile in db
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "", ":");
         dbHas1Profile();
         break;
 
       default:
+        // when >1 profiles in db
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "s", ":");
         for (int i = 0; i < profileCount; i++) {
           Profile profile = database.get(i);
+          ArrayList<Policy> policies = profile.getPolicies();
           if (profile.equals(loadedProfile)) {
-            MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
                 "*** ",
                 Integer.toString(i + 1),
                 profile.getUserName(),
-                Integer.toString(profile.getAge()));
+                Integer.toString(profile.getAge()),
+                Integer.toString(policies.size()),
+                policyPluralCheck(policies),
+                Integer.toString(profile.calculatePoliciesSum()));
           } else {
-            MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-                Integer.toString(i + 1), profile.getUserName(), Integer.toString(profile.getAge()));
+            MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
+                "",
+                Integer.toString(i + 1),
+                profile.getUserName(),
+                Integer.toString(profile.getAge()),
+                Integer.toString(policies.size()),
+                policyPluralCheck(policies),
+                Integer.toString(profile.calculatePoliciesSum()));
           }
         }
     }
