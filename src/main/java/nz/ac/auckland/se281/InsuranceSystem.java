@@ -119,7 +119,11 @@ public class InsuranceSystem {
   }
 
   public void createPolicy(PolicyType type, String[] options) {
-    // TODO: Complete this method.
+    if (loadedProfile == null) {
+      MessageCli.NO_PROFILE_FOUND_TO_CREATE_POLICY.printMessage();
+    } else {
+
+    }
   }
 
   public boolean isProfileArgsValid(String userName, String age) {
