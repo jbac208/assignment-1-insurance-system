@@ -26,6 +26,7 @@ public class InsuranceSystem {
         // when 1 profile in db
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "", ":");
         dbHas1Profile();
+        printProfilePolicies(database.get(0));
         break;
 
       default:
@@ -53,7 +54,31 @@ public class InsuranceSystem {
                 policyPluralCheck(policies),
                 Integer.toString(profile.calculatePoliciesSum()));
           }
+          printProfilePolicies(profile);
         }
+    }
+  }
+
+  public void printProfilePolicies(Profile profile) {
+    for (Policy policy : profile.getPolicies()) {
+      if (policy instanceof HomePolicy) {
+        MessageCli.PRINT_DB_HOME_POLICY.printMessage(
+            ((HomePolicy) policy).getAddress(),
+            Integer.toString(policy.getSumInsured()),
+            Integer.toString((int) policy.getBasePremium()),
+            Integer.toString((int) policy.getDiscountedPremium()));
+      } else if (policy instanceof CarPolicy) {
+        MessageCli.PRINT_DB_CAR_POLICY.printMessage(
+            ((CarPolicy) policy).getMakeAndModel(),
+            Integer.toString(policy.getSumInsured()),
+            Integer.toString((int) policy.getBasePremium()),
+            Integer.toString((int) policy.getDiscountedPremium()));
+      } else {
+        MessageCli.PRINT_DB_LIFE_POLICY.printMessage(
+            Integer.toString(policy.getSumInsured()),
+            Integer.toString((int) policy.getBasePremium()),
+            Integer.toString((int) policy.getDiscountedPremium()));
+      }
     }
   }
 
