@@ -56,7 +56,7 @@ public class InsuranceSystem {
           Integer.toString(loadedProfile.getAge()),
           Integer.toString(policies.size()),
           policyPluralCheck(policies),
-          Integer.toString(calculatePoliciesSum(policies)));
+          Integer.toString(loadedProfile.calculatePoliciesSum()));
     } else {
       MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
           "",
@@ -65,7 +65,7 @@ public class InsuranceSystem {
           Integer.toString(database.get(0).getAge()),
           Integer.toString(policies.size()),
           policyPluralCheck(policies),
-          Integer.toString(calculatePoliciesSum(policies)));  // fix this
+          Integer.toString(database.get(0).calculatePoliciesSum())); // fix this
     }
   }
 

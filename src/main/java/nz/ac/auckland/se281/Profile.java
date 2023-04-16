@@ -44,13 +44,17 @@ public class Profile {
       for (Policy policy : profilePolicies) {
         policy.setDiscountedPremium(policy.getBasePremium() * (1 - 0.2)); // 20% discount
       }
+    } else {
+      for (Policy policy : profilePolicies) {
+        policy.setDiscountedPremium(policy.getBasePremium()); // 0% discount
+      }
     }
   }
 
-
-  public int calculatePoliciesSum(ArrayList<Policy> policies) {
+  public int calculatePoliciesSum() {
+    setPremiumDiscounts(); // finalise prices of policies before summing
     int sum = 0;
-    for (Policy policy : policies) {
+    for (Policy policy : profilePolicies) {
       sum += policy.getDiscountedPremium();
     }
     return sum;
