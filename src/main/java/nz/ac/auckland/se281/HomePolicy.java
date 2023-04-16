@@ -9,14 +9,19 @@ public class HomePolicy extends Policy {
     super(sumInsured);
     this.address = address;
     this.rental = rental;
+    calculateDiscountedPremium();
+  }
+
+  public String getAddress() {
+    return address;
   }
 
   @Override
-  public void calculatePremium() {
+  public void calculateDiscountedPremium() {
     if (rental) {
-      setBasePremium(getBasePremium() * 0.02);
+      setDiscountedPremium(getBasePremium() * (1 - 0.02));
     } else {
-      setBasePremium(getBasePremium() * 0.01);
+      setDiscountedPremium(getBasePremium() * (1 - 0.01));
     }
   }
 }

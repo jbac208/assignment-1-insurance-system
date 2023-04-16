@@ -56,14 +56,29 @@ public class InsuranceSystem {
           Integer.toString(loadedProfile.getAge()),
           Integer.toString(policies.size()),
           policyPluralCheck(policies),
-          "100");
+          Integer.toString(calculatePoliciesSum(policies)));
     } else {
-      MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
-          "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
+      MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
+          "",
+          "1",
+          database.get(0).getUserName(),
+          Integer.toString(database.get(0).getAge()),
+          Integer.toString(policies.size()),
+          policyPluralCheck(policies),
+          Integer.toString(calculatePoliciesSum(policies)));
     }
   }
 
+  public int calculatePoliciesSum(ArrayList<Policy> policies) {
+    int sum = 0;
+    for (Policy policy : policies) {
+      sum += policy.getDiscountedPremium();
+    }
+    return sum;
+  }
+
   public String policyPluralCheck(ArrayList<Policy> policies) {
+    // method returns appropriate suffix to polic...
     int policyCount = policies.size();
     if (policyCount == 1) {
       return "y";
@@ -146,12 +161,7 @@ public class InsuranceSystem {
       // create according policy and add to profile
       switch (type) {
         case HOME:
-          Boolean rent;
-          if (options[2].equals("yes")) {
-            rent = true;
-          } else {
-            rent = false;
-          }
+          Boolean rent = stringToBool(options[2]);
           HomePolicy policy = new HomePolicy(sumInsured, options[1], rent);
           MessageCli.NEW_POLICY_CREATED.printMessage("home", userName);
           loadedProfile.addPolicy(policy);
@@ -166,6 +176,14 @@ public class InsuranceSystem {
           break;
       }
     }
+  }
+
+  public Boolean stringToBool(String input) {
+    // method converts input yes to bool true, else bool false
+    if (input.equals("yes")) {
+      return true;
+    }
+    return false;
   }
 
   public boolean isProfileArgsValid(String userName, String age) {
