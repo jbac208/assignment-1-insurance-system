@@ -22,13 +22,19 @@ public class InsuranceSystem {
         break;
 
       case 1:
+        // get profile policies arrayList
+        ArrayList<Policy> policies = database.get(0).getPolicies();
+        // do prints
         MessageCli.PRINT_DB_POLICY_COUNT.printMessage(Integer.toString(profileCount), "", ":");
         if (database.get(0).equals(loadedProfile)) {
-          MessageCli.PRINT_DB_PROFILE_HEADER_SHORT.printMessage(
+          MessageCli.PRINT_DB_PROFILE_HEADER_LONG.printMessage(
               "*** ",
               "1",
-              database.get(0).getUserName(),
-              Integer.toString(database.get(0).getAge()));
+              loadedProfile.getUserName(),
+              Integer.toString(loadedProfile.getAge()),
+              Integer.toString(policies.size()),
+              "y",
+              "100");
         } else {
           MessageCli.PRINT_DB_PROFILE_HEADER_MINIMAL.printMessage(
               "1", database.get(0).getUserName(), Integer.toString(database.get(0).getAge()));
