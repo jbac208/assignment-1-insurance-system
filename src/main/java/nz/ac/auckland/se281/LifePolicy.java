@@ -2,19 +2,16 @@ package nz.ac.auckland.se281;
 
 public class LifePolicy extends Policy {
 
-  private int profileAge;
-  private Boolean hasLifePolicy;
+  private int userAge;
 
   public LifePolicy(int sumInsured, int age) {
     super(sumInsured);
-    this.profileAge = age;
+    userAge = age;
   }
 
   @Override
   public void calculateBasePremium() {
     // calculates, and sets base premium
-    if (profile.getAge() < 100) {
-      // do something
-    }
+    setBasePremium(getSumInsured() * (1 + (userAge / 100)));
   }
 }
