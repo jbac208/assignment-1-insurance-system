@@ -1,10 +1,14 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class Profile {
 
   // instance fields
   private String name;
   private int age;
+
+  private ArrayList<Policy> profilePolicies = new ArrayList();
 
   public Profile(String name, int age) {
     // constructor
@@ -20,5 +24,9 @@ public class Profile {
   public int getAge() {
     // get age
     return this.age;
+  }
+
+  public ArrayList<Policy> getPolicies() {
+    return profilePolicies;
   }
 }
