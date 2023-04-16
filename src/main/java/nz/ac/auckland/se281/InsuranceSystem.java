@@ -65,16 +65,8 @@ public class InsuranceSystem {
           Integer.toString(database.get(0).getAge()),
           Integer.toString(policies.size()),
           policyPluralCheck(policies),
-          Integer.toString(calculatePoliciesSum(policies)));
+          Integer.toString(calculatePoliciesSum(policies)));  // fix this
     }
-  }
-
-  public int calculatePoliciesSum(ArrayList<Policy> policies) {
-    int sum = 0;
-    for (Policy policy : policies) {
-      sum += policy.getDiscountedPremium();
-    }
-    return sum;
   }
 
   public String policyPluralCheck(ArrayList<Policy> policies) {

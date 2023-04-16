@@ -21,12 +21,12 @@ public abstract class Policy {
     return discountedPremium;
   }
 
-  public void setBasePremium(double basePremium) {
-    this.basePremium = basePremium;
+  public void setDiscountedPremium(double discountedPremium) {
+    this.discountedPremium = discountedPremium;
   }
 
-  public void stringToBool(String val) {
-    // if (val )
+  public void setBasePremium(double basePremium) {
+    this.basePremium = basePremium;
   }
 
   public abstract void calculateBasePremium();

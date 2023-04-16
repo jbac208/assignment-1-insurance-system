@@ -8,7 +8,7 @@ public class Profile {
   private String name;
   private int age;
 
-  private ArrayList<Policy> profilePolicies = new ArrayList();
+  private ArrayList<Policy> profilePolicies = new ArrayList<Policy>();
 
   public Profile(String name, int age) {
     // constructor
@@ -32,5 +32,27 @@ public class Profile {
 
   public ArrayList<Policy> getPolicies() {
     return profilePolicies;
+  }
+
+  public void setPremiumDiscounts() {
+    int policyCount = profilePolicies.size();
+    if (policyCount == 2) {
+      for (Policy policy : profilePolicies) {
+        policy.setDiscountedPremium(policy.getBasePremium() * (1 - 0.1)); // 10% discount
+      }
+    } else if (policyCount >= 3) {
+      for (Policy policy : profilePolicies) {
+        policy.setDiscountedPremium(policy.getBasePremium() * (1 - 0.2)); // 20% discount
+      }
+    }
+  }
+
+
+  public int calculatePoliciesSum(ArrayList<Policy> policies) {
+    int sum = 0;
+    for (Policy policy : policies) {
+      sum += policy.getDiscountedPremium();
+    }
+    return sum;
   }
 }
