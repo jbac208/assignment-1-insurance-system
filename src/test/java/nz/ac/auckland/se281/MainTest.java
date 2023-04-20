@@ -14,7 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
   MainTest.Task1.class,
   MainTest.Task2.class, // Uncomment this line when to start Task 2
   MainTest.Task3.class, // Uncomment this line when to start Task 3
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+  MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
   public static class Task1 extends CliTest {
@@ -362,17 +362,687 @@ public class MainTest {
     }
 
     @Test
-    public void TY_01_your_own_test() throws Exception {
+    public void Home_Policy_Tests_One_Policy() throws Exception {
       // Write your own test here, in the same format as the other tests.
-      runCommands(PRINT_DB);
-      assertContains("");
+      runCommands(
+          CREATE_PROFILE,
+          "John",
+          21,
+          LOAD_PROFILE,
+          "John",
+          POLICY_HOME,
+          options("1000000", "123 Seaseme Street", "yes"),
+          PRINT_DB);
+
+      assertContains("*** 1: John, 21, 1 policy for a total of $20000");
+      assertContains(
+          "Home Policy (123 Seaseme Street, Sum Insured: $1000000, Premium: $20000 -> $20000)");
     }
 
     @Test
-    public void TY_02_your_own_test() throws Exception {
+    public void Home_Policy_Tests_Two_Policies() throws Exception {
       // Write your own test here, in the same format as the other tests.
-      runCommands(PRINT_DB);
-      assertContains("");
+      runCommands(
+          CREATE_PROFILE,
+          "John",
+          21,
+          LOAD_PROFILE,
+          "John",
+          POLICY_HOME,
+          options("1000000", "123 Seaseme Street", "yes"),
+          POLICY_HOME,
+          options("1000000", "18 This Way", "no"),
+          PRINT_DB);
+      assertContains("*** 1: John, 21, 2 policies for a total of $27000");
+      assertContains(
+          "Home Policy (123 Seaseme Street, Sum Insured: $1000000, Premium: $20000 -> $18000)");
+      assertContains("Home Policy (18 This Way, Sum Insured: $1000000, Premium: $10000 -> $9000)");
+    }
+
+    @Test
+    public void Home_Policy_Tests_Three_Policies() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "John",
+          21,
+          LOAD_PROFILE,
+          "John",
+          POLICY_HOME,
+          options("1000000", "123 Seaseme Street", "yes"),
+          POLICY_HOME,
+          options("1000000", "18 This Way", "no"),
+          POLICY_HOME,
+          options("1000000", "20 No Name Road", "yes"),
+          UNLOAD_PROFILE,
+          PRINT_DB);
+
+      assertContains("1: John, 21, 3 policies for a total of $40000");
+      assertContains(
+          "Home Policy (123 Seaseme Street, Sum Insured: $1000000, Premium: $20000 -> $16000)");
+      assertContains("Home Policy (18 This Way, Sum Insured: $1000000, Premium: $10000 -> $8000)");
+      assertContains(
+          "Home Policy (20 No Name Road, Sum Insured: $1000000, Premium: $20000 -> $16000)");
+    }
+
+    @Test
+    public void Home_Policy_Tests_One_Policy_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Joe",
+          21,
+          LOAD_PROFILE,
+          "Joe",
+          POLICY_HOME,
+          options("1000000", "20 Symon Street", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Joe, 21, 1 policy for a total of $20000");
+      assertContains(
+          "Home Policy (20 Symon Street, Sum Insured: $1000000, Premium: $20000 -> $20000)");
+    }
+
+    @Test
+    public void Home_Policy_Tests_Two_Policies_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Joe",
+          21,
+          LOAD_PROFILE,
+          "Joe",
+          POLICY_HOME,
+          options("10", "20 Symon Street", "yes"),
+          POLICY_HOME,
+          options("1000000", "671 Lincoln Ave", "no"),
+          PRINT_DB);
+      assertContains("*** 1: Joe, 21, 2 policies for a total of $9000");
+      assertContains("Home Policy (20 Symon Street, Sum Insured: $10, Premium: $0 -> $0)");
+      assertContains(
+          "Home Policy (671 Lincoln Ave, Sum Insured: $1000000, Premium: $10000 -> $9000)");
+    }
+
+    @Test
+    public void Home_Policy_Tests_Three_Policies_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Joe",
+          21,
+          LOAD_PROFILE,
+          "Joe",
+          POLICY_HOME,
+          options("1000000", "20 Symon Street", "yes"),
+          POLICY_HOME,
+          options("1000000", "671 Lincoln Ave", "no"),
+          POLICY_HOME,
+          options("10000", "20 Garden Street", "no"),
+          PRINT_DB);
+
+      assertContains("*** 1: Joe, 21, 3 policies for a total of $24080");
+      assertContains(
+          "Home Policy (20 Symon Street, Sum Insured: $1000000, Premium: $20000 -> $16000)");
+      assertContains(
+          "Home Policy (671 Lincoln Ave, Sum Insured: $1000000, Premium: $10000 -> $8000)");
+      assertContains("Home Policy (20 Garden Street, Sum Insured: $10000, Premium: $100 -> $80)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_One_Policy() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Eric",
+          255,
+          LOAD_PROFILE,
+          "Eric",
+          POLICY_CAR,
+          options("1000000", "Subaru Imperza", "ABC123", "yes"),
+          PRINT_DB);
+
+      assertContains("*** 1: Eric, 255, 1 policy for a total of $100080");
+      assertContains(
+          "Car Policy (Subaru Imperza, Sum Insured: $1000000, Premium: $100080 -> $100080)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Two_Policies() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Eric",
+          255,
+          LOAD_PROFILE,
+          "Eric",
+          POLICY_CAR,
+          options("100000", "Subaru Imperza", "ABC123", "yes"),
+          POLICY_CAR,
+          options("1000000", "DeLorean", "BACK2F", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Eric, 255, 2 policies for a total of $99144");
+      assertContains("Car Policy (Subaru Imperza, Sum Insured: $100000, Premium: $10080 -> $9072)");
+      assertContains("Car Policy (DeLorean, Sum Insured: $1000000, Premium: $100080 -> $90072)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Three_Policies() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Eric",
+          255,
+          LOAD_PROFILE,
+          "Eric",
+          POLICY_CAR,
+          options("1000000", "Subaru Imperza", "ABC123", "yes"),
+          POLICY_CAR,
+          options("100", "DeLorean", "BACK2F", "yes"),
+          POLICY_CAR,
+          options("1000000", "Dodge Charger", "2FAST", "yes"),
+          PRINT_DB);
+
+      assertContains("*** 1: Eric, 255, 3 policies for a total of $160200");
+      assertContains(
+          "Car Policy (Subaru Imperza, Sum Insured: $1000000, Premium: $100080 -> $80064)");
+      assertContains("Car Policy (DeLorean, Sum Insured: $100, Premium: $90 -> $72)");
+      assertContains(
+          "Car Policy (Dodge Charger, Sum Insured: $1000000, Premium: $100080 -> $80064)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_One_Policy_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Dominic",
+          25,
+          LOAD_PROFILE,
+          "Dominic",
+          POLICY_CAR,
+          options("1000000", "Honda NSX", "NSX923", "no"),
+          PRINT_DB);
+      assertContains("*** 1: Dominic, 25, 1 policy for a total of $100000");
+      assertContains("Car Policy (Honda NSX, Sum Insured: $1000000, Premium: $100000 -> $100000)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Two_Policies_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Dominic",
+          25,
+          LOAD_PROFILE,
+          "Dominic",
+          POLICY_CAR,
+          options("1000", "Honda NSX", "NSX923", "no"),
+          POLICY_CAR,
+          options("1000000", "Cheverlot Camaro", "BUMBLE", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Dominic, 25, 2 policies for a total of $90162");
+      assertContains("Car Policy (Honda NSX, Sum Insured: $1000, Premium: $100 -> $90)");
+      assertContains(
+          "Car Policy (Cheverlot Camaro, Sum Insured: $1000000, Premium: $100080 -> $90072)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Three_Policies_Type2() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Dominic",
+          25,
+          LOAD_PROFILE,
+          "Dominic",
+          POLICY_CAR,
+          options("1000000", "Honda NSX", "NSX923", "no"),
+          POLICY_CAR,
+          options("1000000", "Cheverlot Camaro", "BUMBLE", "yes"),
+          POLICY_CAR,
+          options("1000", "Nissan Fairlady Z", "DJK321", "no"),
+          PRINT_DB);
+
+      assertContains("*** 1: Dominic, 25, 3 policies for a total of $160144");
+      assertContains("Car Policy (Honda NSX, Sum Insured: $1000000, Premium: $100000 -> $80000)");
+      assertContains(
+          "Car Policy (Cheverlot Camaro, Sum Insured: $1000000, Premium: $100080 -> $80064)");
+      assertContains("Car Policy (Nissan Fairlady Z, Sum Insured: $1000, Premium: $100 -> $80)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_One_Policy_Under25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Elon",
+          16,
+          LOAD_PROFILE,
+          "Elon",
+          POLICY_CAR,
+          options("1000000", "Tesla Model 3", "NOGAS", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Elon, 16, 1 policy for a total of $150080");
+      assertContains(
+          "Car Policy (Tesla Model 3, Sum Insured: $1000000, Premium: $150080 -> $150080)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Two_Policies_Under25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Elon",
+          16,
+          LOAD_PROFILE,
+          "Elon",
+          POLICY_CAR,
+          options("1000", "Tesla Model 3", "NOGAS", "yes"),
+          POLICY_CAR,
+          options("1000000", "Model T Ford", "OLDMAN", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Elon, 16, 2 policies for a total of $135279");
+      assertContains("Car Policy (Tesla Model 3, Sum Insured: $1000, Premium: $230 -> $207)");
+      assertContains(
+          "Car Policy (Model T Ford, Sum Insured: $1000000, Premium: $150080 -> $135072)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Three_Policies_Under25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Elon",
+          16,
+          LOAD_PROFILE,
+          "Elon",
+          POLICY_CAR,
+          options("1000000", "Tesla Model 3", "NOGAS", "yes"),
+          POLICY_CAR,
+          options("1000000", "Model T Ford", "OLDMAN", "yes"),
+          POLICY_CAR,
+          options("1000000", "Volkswagon Beetle", "HERBIE", "yes"),
+          PRINT_DB);
+
+      assertContains("*** 1: Elon, 16, 3 policies for a total of $360192");
+      assertContains(
+          "Car Policy (Tesla Model 3, Sum Insured: $1000000, Premium: $150080 -> $120064)");
+      assertContains(
+          "Car Policy (Model T Ford, Sum Insured: $1000000, Premium: $150080 -> $120064)");
+      assertContains(
+          "Car Policy (Volkswagon Beetle, Sum Insured: $1000000, Premium: $150080 -> $120064)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_One_Policy_Over25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Brian",
+          30,
+          LOAD_PROFILE,
+          "Brian",
+          POLICY_CAR,
+          options("1000000", "Nissan Skyline", "CONNER", "no"),
+          PRINT_DB);
+      assertContains("*** 1: Brian, 30, 1 policy for a total of $100000");
+      assertContains(
+          "Car Policy (Nissan Skyline, Sum Insured: $1000000, Premium: $100000 -> $100000)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Two_Policies_Over25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Brian",
+          30,
+          LOAD_PROFILE,
+          "Brian",
+          POLICY_CAR,
+          options("1000000", "Nissan Skyline", "CONNER", "no"),
+          POLICY_CAR,
+          options("1000", "Optimus Prime", "ATOBOT", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Brian, 30, 2 policies for a total of $90162");
+      assertContains(
+          "Car Policy (Nissan Skyline, Sum Insured: $1000000, Premium: $100000 -> $90000)");
+      assertContains("Car Policy (Optimus Prime, Sum Insured: $1000, Premium: $180 -> $162)");
+    }
+
+    @Test
+    public void Car_Policy_Tests_Three_Policies_Over25() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Brian",
+          30,
+          LOAD_PROFILE,
+          "Brian",
+          POLICY_CAR,
+          options("1000000", "Nissan Skyline", "CONNER", "no"),
+          POLICY_CAR,
+          options("1000000", "Optimus Prime", "ATOBOT", "yes"),
+          POLICY_CAR,
+          options("1000000", "Toyota Tecoma", "NIVISN", "no"),
+          PRINT_DB);
+
+      assertContains("*** 1: Brian, 30, 3 policies for a total of $240064");
+      assertContains(
+          "Car Policy (Nissan Skyline, Sum Insured: $1000000, Premium: $100000 -> $80000)");
+      assertContains(
+          "Car Policy (Optimus Prime, Sum Insured: $1000000, Premium: $100080 -> $80064)");
+      assertContains(
+          "Car Policy (Toyota Tecoma, Sum Insured: $1000000, Premium: $100000 -> $80000)");
+    }
+
+    @Test
+    public void Life_Policy_Too_Old() throws Exception {
+      // Write your own test here, in the same format as the other tests.
+      runCommands(
+          CREATE_PROFILE,
+          "Thanos",
+          1000,
+          LOAD_PROFILE,
+          "Thanos",
+          POLICY_LIFE,
+          options("1000"),
+          POLICY_CAR,
+          options("1000000", "Thanos Copter", "THANOS", "no"),
+          POLICY_HOME,
+          options("1000000", "Titan", "yes"),
+          PRINT_DB);
+      assertContains("*** 1: Thanos, 1000, 2 policies for a total of $108000");
+      assertContains(
+          "Car Policy (Thanos Copter, Sum Insured: $1000000, Premium: $100000 -> $90000)");
+      assertContains("Home Policy (Titan, Sum Insured: $1000000, Premium: $20000 -> $18000)");
+    }
+
+    @Test
+    public void Full_Test_1() throws Exception {
+      runCommands(
+          CREATE_PROFILE,
+          "John",
+          21,
+          LOAD_PROFILE,
+          "John",
+          POLICY_HOME,
+          options("1000000", "123 Seaseme Street", "yes"),
+          POLICY_HOME,
+          options("1000", "18 This Way", "no"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Joe",
+          21,
+          LOAD_PROFILE,
+          "Joe",
+          POLICY_HOME,
+          options("1000000", "20 Symon Street", "yes"),
+          POLICY_HOME,
+          options("1000000", "20 Garden Street", "no"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Eric",
+          255,
+          LOAD_PROFILE,
+          "Eric",
+          POLICY_CAR,
+          options("1000", "Subaru Imperza", "ABC123", "yes"),
+          POLICY_CAR,
+          options("1000", "DeLorean", "BACK2F", "no"),
+          POLICY_CAR,
+          options("1000000", "Dodge Charger", "2FAST", "yes"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Dominic",
+          25,
+          LOAD_PROFILE,
+          "Dominic",
+          POLICY_CAR,
+          options("1000000", "Honda NSX", "NSX923", "no"),
+          POLICY_CAR,
+          options("1000000", "Cheverlot Camaro", "BUMBLE", "yes"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Elon",
+          16,
+          LOAD_PROFILE,
+          "Elon",
+          POLICY_CAR,
+          options("1000000", "Tesla Model 3", "NOGAS", "yes"),
+          POLICY_CAR,
+          options("1000000", "Model T Ford", "OLDMAN", "no"),
+          POLICY_CAR,
+          options("1000000", "Volkswagon Beetle", "HERBIE", "yes"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Brian",
+          30,
+          LOAD_PROFILE,
+          "Brian",
+          POLICY_CAR,
+          options("1000000", "Nissan Skyline", "CONNER", "no"),
+          POLICY_CAR,
+          options("1000000", "Optimus Prime", "ATOBOT", "yes"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Elizabeth",
+          25,
+          LOAD_PROFILE,
+          "Elizabeth",
+          POLICY_CAR,
+          options("1000000", "Aston Martin DB9", "FAST8", "no"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "LeBron",
+          14,
+          LOAD_PROFILE,
+          "LeBron",
+          POLICY_CAR,
+          options("1000000", "Subaru Impreza WRX", "BABY", "no"),
+          POLICY_CAR,
+          options("1000000", "Enzo Ferrari", "FERARI", "no"),
+          UNLOAD_PROFILE,
+          CREATE_PROFILE,
+          "Thanos",
+          1000,
+          LOAD_PROFILE,
+          "Thanos",
+          POLICY_LIFE,
+          options("1000"),
+          POLICY_CAR,
+          options("1000", "Thanos Copter", "THANOS", "no"),
+          POLICY_HOME,
+          options("1000", "Titan", "yes"),
+          UNLOAD_PROFILE,
+          PRINT_DB);
+
+      assertContains("1: John, 21, 2 policies for a total of $18009");
+      assertContains(
+          "Home Policy (123 Seaseme Street, Sum Insured: $1000000, Premium: $20000 -> $18000)");
+      assertContains("Home Policy (18 This Way, Sum Insured: $1000, Premium: $10 -> $9)");
+      assertContains("2: Joe, 21, 2 policies for a total of $27000");
+      assertContains(
+          "Home Policy (20 Symon Street, Sum Insured: $1000000, Premium: $20000 -> $18000)");
+      assertContains(
+          "Home Policy (20 Garden Street, Sum Insured: $1000000, Premium: $10000 -> $9000)");
+      assertContains("3: Eric, 255, 3 policies for a total of $80288");
+      assertContains("Car Policy (Subaru Imperza, Sum Insured: $1000, Premium: $180 -> $144)");
+      assertContains("Car Policy (DeLorean, Sum Insured: $1000, Premium: $100 -> $80)");
+      assertContains(
+          "Car Policy (Dodge Charger, Sum Insured: $1000000, Premium: $100080 -> $80064)");
+      assertContains("4: Dominic, 25, 2 policies for a total of $180072");
+      assertContains("Car Policy (Honda NSX, Sum Insured: $1000000, Premium: $100000 -> $90000)");
+      assertContains(
+          "Car Policy (Cheverlot Camaro, Sum Insured: $1000000, Premium: $100080 -> $90072)");
+      assertContains("5: Elon, 16, 3 policies for a total of $360128");
+      assertContains(
+          "Car Policy (Tesla Model 3, Sum Insured: $1000000, Premium: $150080 -> $120064)");
+      assertContains(
+          "Car Policy (Model T Ford, Sum Insured: $1000000, Premium: $150000 -> $120000)");
+      assertContains(
+          "Car Policy (Volkswagon Beetle, Sum Insured: $1000000, Premium: $150080 -> $120064)");
+      assertContains("6: Brian, 30, 2 policies for a total of $180072");
+      assertContains(
+          "Car Policy (Nissan Skyline, Sum Insured: $1000000, Premium: $100000 -> $90000)");
+      assertContains(
+          "Car Policy (Optimus Prime, Sum Insured: $1000000, Premium: $100080 -> $90072)");
+      assertContains("7: Elizabeth, 25, 1 policy for a total of $100000");
+      assertContains(
+          "Car Policy (Aston Martin DB9, Sum Insured: $1000000, Premium: $100000 -> $100000)");
+      assertContains("8: Lebron, 14, 2 policies for a total of $270000");
+      assertContains(
+          "Car Policy (Subaru Impreza WRX, Sum Insured: $1000000, Premium: $150000 -> $135000)");
+      assertContains(
+          "Car Policy (Enzo Ferrari, Sum Insured: $1000000, Premium: $150000 -> $135000)");
+      assertContains("9: Thanos, 1000, 2 policies for a total of $108");
+      assertContains("Car Policy (Thanos Copter, Sum Insured: $1000, Premium: $100 -> $90)");
+      assertContains("Home Policy (Titan, Sum Insured: $1000, Premium: $20 -> $18)");
+    }
+
+    @Test
+    public void T2_M01_load_invalid_profile_while_already_loaded() throws Exception {
+      runCommands(
+          unpack(CREATE_SOME_CLIENTS, LOAD_PROFILE, "jorDAN", LOAD_PROFILE, "toBY", PRINT_DB));
+
+      assertContains("Profile loaded for Jordan.");
+      assertContains("No profile found for Toby. Profile not loaded.");
+      assertContains("Database has 3 profiles:");
+      assertContains("*** 1: Jordan, 21");
+
+      assertDoesNotContain("Profile loaded for Toby.", true);
+    }
+
+    @Test
+    public void T2_M02_create_profile_when_profile_loaded() throws Exception {
+      runCommands(
+          unpack(CREATE_SOME_CLIENTS, LOAD_PROFILE, "TOM", CREATE_PROFILE, "tOBy", "28", PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("Cannot create a new profile. First unload the profile for Tom.");
+      assertContains("Database has 3 profiles:");
+
+      assertDoesNotContain("Database has 4 profiles:", true);
+      assertDoesNotContain("4: Tom, 28", true);
+    }
+
+    @Test
+    public void T2_M03_create_profile_after_profile_loaded() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "toM",
+              UNLOAD_PROFILE,
+              CREATE_PROFILE,
+              "ToBy",
+              "28",
+              PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("Profile unloaded for Tom.");
+      assertContains("New profile created for Toby with age 28.");
+      assertContains("Database has 4 profiles:");
+      assertContains("4: Toby, 28");
+
+      assertDoesNotContain("Cannot create a new profile. First unload the profile for Tom.", true);
+      assertDoesNotContain("Database has 3 profiles:", true);
+    }
+
+    @Test
+    public void T2_M04_delete_profile_not_found() throws Exception {
+      runCommands(unpack(CREATE_SOME_CLIENTS, DELETE_PROFILE, "samUEl", PRINT_DB));
+
+      assertContains("Database has 3 profiles:");
+      assertContains("No profile found for Samuel. No profile was deleted.");
+
+      assertDoesNotContain("Profile deleted for Samuel.", true);
+    }
+
+    @Test
+    public void T3_M01_create_car_policy_age_test() throws Exception {
+      runCommands(
+          unpack( //
+              CREATE_SOME_CLIENTS, //
+              LOAD_PROFILE,
+              "ToM", //
+              POLICY_CAR,
+              options("35000", "Nissan Leaf", "GR333N", "no"), //
+              LOAD_PROFILE,
+              "jorDAN", //
+              POLICY_CAR,
+              options("1000", "Toyota RAV-4", "S4V3RS", "yes"), //
+              PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("Profile loaded for Jordan.");
+
+      assertContains("Car Policy (Nissan Leaf, Sum Insured: $35000, Premium: $3500 -> $3500)");
+      assertContains("Car Policy (Toyota RAV-4, Sum Insured: $1000, Premium: $230 -> $230)");
+
+      assertContains(" *** 1: Jordan, 21, 1 policy for a total of $230");
+      assertContains("2: Tom, 25, 1 policy for a total of $3500");
+    }
+
+    @Test
+    public void T3_M02_maximum_age_boundary_life_policy() throws Exception {
+      runCommands( //
+          CREATE_PROFILE,
+          "cAMEROn",
+          "100", //
+          LOAD_PROFILE,
+          "CAMERon", //
+          POLICY_LIFE,
+          options("950000"), //
+          PRINT_DB);
+
+      assertContains("New profile created for Cameron with age 100.");
+      assertContains("Profile loaded for Cameron.");
+
+      assertContains("Life Policy (Sum Insured: $950000, Premium: $19000 -> $19000)");
+    }
+
+    @Test
+    public void T3_M03_only_one_life_policy_per_profile() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS, //
+              LOAD_PROFILE,
+              "JEnnY", //
+              POLICY_LIFE,
+              options("15000000"), //
+              LOAD_PROFILE,
+              "JorDAN", //
+              POLICY_LIFE,
+              options("5000000"), //
+              POLICY_HOME,
+              options("7500000", "80 Queens Road", "yes"), //
+              LOAD_PROFILE,
+              "JEnNY", //
+              POLICY_LIFE,
+              options("10000000"), //
+              PRINT_DB));
+
+      assertContains("Profile loaded for Jenny.");
+      assertContains("Profile loaded for Jordan.");
+
+      assertContains("New life policy created for Jenny.");
+      assertContains("New life policy created for Jordan.");
+      assertContains("New home policy created for Jordan.");
+
+      assertContains("Life Policy (Sum Insured: $15000000, Premium: $184500 -> $184500)");
+      assertContains("Life Policy (Sum Insured: $5000000, Premium: $60500 -> $54450)");
+      assertContains(
+          "Home Policy (80 Queens Road, Sum Insured: $7500000, Premium: $150000 -> $135000)");
+
+      assertContains("Jenny already has a life policy. No new policy was created.");
+
+      assertDoesNotContain(
+          "Life Policy (Sum Insured: $10000000, Premium: $123000 -> $123000)", true);
+      assertDoesNotContain(
+          "Life Policy (Sum Insured: $10000000, Premium: $123000 -> $110700)", true);
+      assertDoesNotContain(
+          "Life Policy (Sum Insured: $15000000, Premium: $184500 -> $166050)", true);
+      assertDoesNotContain("3: Jenny, 23, 2 policies", true);
     }
   }
 
